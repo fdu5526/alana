@@ -42,9 +42,9 @@ public class Narrative : MonoBehaviour {
 		Invoke("TalkToPimp9",  start + 42f);
 		Invoke("TalkToPimp10", start + 44f);
 
-		Invoke("StopCamera", start + 54f);
-		Invoke("StopWalk", start + 63f);
-		Invoke("CutToKnock", start + 67f);
+		Invoke("StopCamera", 	 start + 54f);
+		Invoke("StopWalk", 		 start + 63f);
+		Invoke("CutToKnock", 	 start + 67f);
 
 	}
 
