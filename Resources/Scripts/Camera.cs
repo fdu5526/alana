@@ -15,11 +15,11 @@ public class Camera : MonoBehaviour {
 		alana = GameObject.Find("Alana");
 
 
-		int numTexts = 3;
+		int numTexts = 7;
 		dialogues = new Dialogue[numTexts];
 
 		for (int i = 0; i < numTexts; i++) {
-			dialogues[i] = GameObject.Find("Text " + i).GetComponent<Dialogue>();
+			dialogues[i] = GameObject.Find("Texts/Text " + i).GetComponent<Dialogue>();
 		}
 
 
@@ -30,6 +30,10 @@ public class Camera : MonoBehaviour {
 		Invoke("MoveToPimp", 	 start + 18f);
 		Invoke("TalkToPimp1",  start + 20f);
 		Invoke("TalkToPimp2",  start + 24f);
+		Invoke("TalkToPimp3",  start + 28f);
+		Invoke("TalkToPimp4",  start + 30f);
+		Invoke("TalkToPimp5",  start + 34f);
+		Invoke("TalkToPimp6",  start + 37f);
 
 	}
 
@@ -55,11 +59,11 @@ public class Camera : MonoBehaviour {
 		rb.velocity = v;
 		alana.GetComponent<Rigidbody2D>().velocity = v;
 
-		dialogues[0].Display();
+		dialogues[0].Display(); // You're late.
 	}
 
-	void TalkToPimp1 () {
-		dialogues[1].Display();
+	void TalkToPimp1 () { 
+		dialogues[1].Display(); // // sorry
 	}
 
 	void TalkToPimp2 () {
@@ -67,7 +71,23 @@ public class Camera : MonoBehaviour {
 		rb.velocity = v;
 		alana.GetComponent<Rigidbody2D>().velocity = v;
 		alana.GetComponent<Animator>().SetBool("walk", false);
-		dialogues[2].Display();
+		dialogues[2].Display(); // is there any food left?
+	}
+
+	void TalkToPimp3 () {
+		dialogues[3].Display(); // here
+	}
+
+	void TalkToPimp4 () {
+		dialogues[4].Display(); // thanks
+	}
+
+	void TalkToPimp5 () {
+		dialogues[5].Display(); // So, are you ready?
+	}
+
+	void TalkToPimp6 () {
+		dialogues[6].Display(); // Don't mess up this time.
 	}
 
 	

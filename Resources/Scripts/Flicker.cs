@@ -5,18 +5,20 @@ public class Flicker : MonoBehaviour {
 
 	float prevFlickerTime;
 	float flickerCooldown;
+	Color flickOff;
 
 	// Use this for initialization
 	void Start () {
 		flickerCooldown = NewFlickerTime;
 		prevFlickerTime = -flickerCooldown;
+		flickOff = new Color(1f,1f,1f, 0.8f);
 	}
 
 
 	float NewFlickerTime { get { return UnityEngine.Random.Range(0.1f, 0.5f); }}
 
 	void FlickOff () {
-		GetComponent<SpriteRenderer>().color = new Color(1f,1f,1f, 0.8f);
+		GetComponent<SpriteRenderer>().color = flickOff;
 	}
 
 	void FlickOn () {
