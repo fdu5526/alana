@@ -13,9 +13,8 @@ public class Camera : MonoBehaviour {
 		alana = GameObject.Find("Alana");
 
 
-		float start = 0f;
+		float start = 4f;
 
-		Invoke("StartMoving", start);
 		Invoke("MoveToStairs", start);
 		Invoke("MoveUpStairs", start + 13f);
 		Invoke("MoveToPimp", 	 start + 18f);
@@ -23,15 +22,13 @@ public class Camera : MonoBehaviour {
 
 	}
 
-	void StartMoving () {
-		Vector2 v = new Vector2(speed, 0f);
-		alana.GetComponent<Rigidbody2D>().velocity = v;
-	}
+
 	
 	void MoveToStairs () {
 		Vector2 v = new Vector2(speed, 0f);
 		rb.velocity = v;
 		alana.GetComponent<Rigidbody2D>().velocity = v;
+		alana.GetComponent<Animator>().SetBool("walk", true);
 	}
 
 	void MoveUpStairs () {
@@ -50,6 +47,7 @@ public class Camera : MonoBehaviour {
 		Vector2 v = new Vector2(0f, 0f);
 		rb.velocity = v;
 		alana.GetComponent<Rigidbody2D>().velocity = v;
+		alana.GetComponent<Animator>().SetBool("walk", false);
 	}
 
 	
