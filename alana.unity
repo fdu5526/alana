@@ -344,7 +344,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 426933688}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.422910005, y: -1.19219995, z: -1.88870001}
+  m_LocalPosition: {x: -.550000012, y: -1.19219995, z: -1.88870001}
   m_LocalScale: {x: .0154796122, y: .0154796094, z: .0154796094}
   m_Children: []
   m_Father: {fileID: 761049857}
@@ -359,7 +359,7 @@ GameObject:
   - 4: {fileID: 480691789}
   - 212: {fileID: 480691788}
   m_Layer: 0
-  m_Name: lights
+  m_Name: foreground1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -570,7 +570,7 @@ Canvas:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 530641575}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -606,7 +606,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 562074815}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .756649971, y: -.528240025, z: -1}
+  m_LocalPosition: {x: .756649971, y: -.407999992, z: -1}
   m_LocalScale: {x: .0211934373, y: .0211934336, z: .0211934336}
   m_Children: []
   m_Father: {fileID: 761049857}
@@ -1029,7 +1029,7 @@ GameObject:
   - 212: {fileID: 1310087260}
   - 114: {fileID: 1310087262}
   m_Layer: 0
-  m_Name: sign
+  m_Name: foreground2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

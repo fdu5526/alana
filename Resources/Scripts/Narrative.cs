@@ -30,7 +30,7 @@ public class Narrative : MonoBehaviour {
 		Invoke("MoveToStairs", start);
 		Invoke("MoveUpStairs", start + 13f);
 		
-		Invoke("MoveToPimp", 	 start + 18f);
+		Invoke("MoveToPimp", 	 start + 18.5f);
 		Invoke("TalkToPimp1",  start + 20f);
 		Invoke("TalkToPimp2",  start + 24f);
 		Invoke("TalkToPimp3",  start + 28f);
