@@ -5,18 +5,45 @@ public class Narrative : MonoBehaviour {
 
 	Rigidbody2D rb;
 	float speed = 0.5f;
-	GameObject alana;
+	
+
+	GameObject alana, char1, foreground1, foreground2, background;
+	Sprite[] foreground1s, foreground2s, backgrounds;
+	RuntimeAnimatorController[] alanaAnimator, char1Animator;
 	BlackFade fade;
 
+	int currentStory;
+	int maxStory = 2;
+
 	Dialogue[] dialogues;
+
 
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody2D>();
 		alana = GameObject.Find("Alana");
-		fade = GameObject.Find("Canvas/Black").GetComponent<BlackFade>();
+		char1 = GameObject.Find("Char1");
+		foreground1 = GameObject.Find("foreground1");
+		foreground2 = GameObject.Find("foreground2");
+	 	background = GameObject.Find("background");
+	 	fade = GameObject.Find("Canvas/Black").GetComponent<BlackFade>();
+
+	 	// get all the stuff that switches
+	 	string[] names = {"Prostitute", "Cookie"};
+	 	foreground1s = new Sprite[names.Length];
+	 	foreground2s = new Sprite[names.Length];
+	 	backgrounds	 = new Sprite[names.Length];
+	 	alanaAnimator = new RuntimeAnimatorController[names.Length];
+	 	char1Animator = new RuntimeAnimatorController[names.Length];
+	 	for (int i = 0; i < names.Length; i++) {
+	 		foreground1s[i] = Resources.Load<Sprite>(names[i] + "/foreground1");
+	 		foreground2s[i] = Resources.Load<Sprite>(names[i] + "/foreground2");
+	 		backgrounds[i] = Resources.Load<Sprite>(names[i] + "/background");
+	 		alanaAnimator[i] = Resources.Load<RuntimeAnimatorController>("Animations/" + names[i] + "Alana");
+	 	}
 
 
+	 	// dialogue initialization
 		int numTexts = 11;
 		dialogues = new Dialogue[numTexts];
 
@@ -134,9 +161,26 @@ public class Narrative : MonoBehaviour {
 		fade.state = BlackFade.FadeState.FadeIn;
 	}
 
+
+	void Switch () {
+		currentStory = currentStory + 1 == maxStory ? 0 : currentStory + 1;
+
+		background.GetComponent<SpriteRenderer>().sprite = backgrounds[currentStory];
+		foreground1.GetComponent<SpriteRenderer>().sprite = foreground1s[currentStory];
+		foreground2.GetComponent<SpriteRenderer>().sprite = foreground2s[currentStory];
+
+		bool state = alana.GetComponent<Animator>().GetBool("walk");
+
+		alana.GetComponent<Animator>().runtimeAnimatorController = alanaAnimator[currentStory];
+		alana.GetComponent<Animator>().SetBool("walk", state);
+
+
+	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		if (Input.GetMouseButtonUp(0)) {
+			Switch();
+		}
 	}
 }
