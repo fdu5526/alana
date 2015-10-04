@@ -8,12 +8,20 @@ public class Dialogue : MonoBehaviour {
 
 	float startTime;
 	bool started;
+	SpriteRenderer speechBubble;
 
 	// Use this for initialization
 	void Start () {
 		GetComponent<TextMesh>().color = new Color(1f,1f,1f,0f);
 		GetComponent<MeshRenderer>().sortingOrder = 3000;
 		started = false;
+
+		Transform s = GetComponent<Transform>().Find("SpeechBubble");
+		if (s != null) {
+			speechBubble = s.gameObject.GetComponent<SpriteRenderer>();
+			speechBubble.color = new Color(0f,0f,0f,0f);
+		}
+		
 	}
 
 	public void Display () {
@@ -36,7 +44,9 @@ public class Dialogue : MonoBehaviour {
 			} else {
 				started = false;
 			}
-			
+			if (speechBubble != null) {
+				speechBubble.color = new Color(0f,0f,0f,d * 0.42f);
+			}
 			GetComponent<TextMesh>().color = new Color(1f,1f,1f,d);
 		} 
 	}
