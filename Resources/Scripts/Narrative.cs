@@ -7,13 +7,15 @@ public class Narrative : MonoBehaviour {
 	float speed = 0.5f;
 	
 
-	GameObject alana, char1, foreground1, foreground2, background;
+	GameObject foreground1, foreground2, background;
+
+	GameObject[] alana, char1;
 	Sprite[] foreground1s, foreground2s, backgrounds;
 	RuntimeAnimatorController[] alanaAnimator, char1Animator;
 	BlackFade fade;
 
-	int currentStory;
-	int maxStory = 2;
+	int currentStory = 1;
+	int maxStory;
 
 	Dialogue[] dialogues;
 
@@ -21,26 +23,41 @@ public class Narrative : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody2D>();
-		alana = GameObject.Find("Alana");
-		char1 = GameObject.Find("Char1");
+		
+		string[] names = {"Prostitute", "Cookie"};
+		maxStory = names.Length;
+
 		foreground1 = GameObject.Find("foreground1");
 		foreground2 = GameObject.Find("foreground2");
 	 	background = GameObject.Find("background");
 	 	fade = GameObject.Find("Canvas/Black").GetComponent<BlackFade>();
 
 	 	// get all the stuff that switches
-	 	string[] names = {"Prostitute", "Cookie"};
-	 	foreground1s = new Sprite[names.Length];
-	 	foreground2s = new Sprite[names.Length];
-	 	backgrounds	 = new Sprite[names.Length];
-	 	alanaAnimator = new RuntimeAnimatorController[names.Length];
-	 	char1Animator = new RuntimeAnimatorController[names.Length];
-	 	for (int i = 0; i < names.Length; i++) {
+	 	alana = new GameObject[maxStory];
+		char1 = new GameObject[maxStory];
+	 	foreground1s = new Sprite[maxStory];
+	 	foreground2s = new Sprite[maxStory];
+	 	backgrounds	 = new Sprite[maxStory];
+	 	alanaAnimator = new RuntimeAnimatorController[maxStory];
+	 	char1Animator = new RuntimeAnimatorController[maxStory];
+	 	for (int i = 0; i < maxStory; i++) {
+	 		alana[i] = GameObject.Find("Alana/" + names[i]);
+	 		char1[i] = GameObject.Find("Char1/" + names[i]);
 	 		foreground1s[i] = Resources.Load<Sprite>(names[i] + "/foreground1");
 	 		foreground2s[i] = Resources.Load<Sprite>(names[i] + "/foreground2");
 	 		backgrounds[i] = Resources.Load<Sprite>(names[i] + "/background");
 	 		alanaAnimator[i] = Resources.Load<RuntimeAnimatorController>("Animations/" + names[i] + "Alana");
 	 	}
+
+	 	for (int i = 0; i < maxStory; i++) {
+			if (i == currentStory) {
+				alana[i].GetComponent<SpriteRenderer>().sortingOrder = 2;
+				char1[i].GetComponent<SpriteRenderer>().sortingOrder = 1;
+			} else {
+				alana[i].GetComponent<SpriteRenderer>().sortingOrder = -100;
+				char1[i].GetComponent<SpriteRenderer>().sortingOrder = -100;
+			}
+		}
 
 
 	 	// dialogue initialization
@@ -80,21 +97,26 @@ public class Narrative : MonoBehaviour {
 	void MoveToStairs () {
 		Vector2 v = new Vector2(speed, 0f);
 		rb.velocity = v;
-		alana.GetComponent<Rigidbody2D>().velocity = v;
-		alana.GetComponent<Animator>().SetBool("walk", true);
+		for (int i = 0; i < maxStory; i++) {
+			alana[i].GetComponent<Rigidbody2D>().velocity = v;
+			alana[i].GetComponent<Animator>().SetBool("walk", true);
+		}
 	}
 
 	void MoveUpStairs () {
 		Vector2 v = new Vector2(0.67f, 0.224f);
 		rb.velocity = new Vector2(0.1f, 0.1f);
-		alana.GetComponent<Rigidbody2D>().velocity = v;
+		for (int i = 0; i < maxStory; i++) {
+			alana[i].GetComponent<Rigidbody2D>().velocity = v;
+		}
 	}
 
 	void MoveToPimp () {
 		Vector2 v = new Vector2(speed, 0f);
 		rb.velocity = v;
-		alana.GetComponent<Rigidbody2D>().velocity = v;
-
+		for (int i = 0; i < maxStory; i++) {
+			alana[i].GetComponent<Rigidbody2D>().velocity = v;
+		}
 		dialogues[0].Display(); // You're late.
 	}
 
@@ -105,8 +127,10 @@ public class Narrative : MonoBehaviour {
 	void TalkToPimp2 () {
 		Vector2 v = new Vector2(0f, 0f);
 		rb.velocity = v;
-		alana.GetComponent<Rigidbody2D>().velocity = v;
-		alana.GetComponent<Animator>().SetBool("walk", false);
+		for (int i = 0; i < maxStory; i++) {
+			alana[i].GetComponent<Rigidbody2D>().velocity = v;
+			alana[i].GetComponent<Animator>().SetBool("walk", false);
+		}
 		dialogues[2].Display(); // is there any food left?
 	}
 
@@ -141,8 +165,10 @@ public class Narrative : MonoBehaviour {
 	void TalkToPimp10 () {
 		Vector2 v = new Vector2(speed, 0f);
 		rb.velocity = v;
-		alana.GetComponent<Rigidbody2D>().velocity = v;
-		alana.GetComponent<Animator>().SetBool("walk", true);
+		for (int i = 0; i < maxStory; i++) {
+			alana[i].GetComponent<Rigidbody2D>().velocity = v;
+			alana[i].GetComponent<Animator>().SetBool("walk", true);
+		}
 		dialogues[10].Display(); // You got this.
 	}
 
@@ -151,8 +177,11 @@ public class Narrative : MonoBehaviour {
 	}
 
 	void StopWalk () {
-		alana.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-		alana.GetComponent<Animator>().SetBool("walk", false);
+		for (int i = 0; i < maxStory; i++) {
+			alana[i].GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+			alana[i].GetComponent<Animator>().SetBool("walk", false);
+		}
+		
 	}
 
 
@@ -169,12 +198,16 @@ public class Narrative : MonoBehaviour {
 		foreground1.GetComponent<SpriteRenderer>().sprite = foreground1s[currentStory];
 		foreground2.GetComponent<SpriteRenderer>().sprite = foreground2s[currentStory];
 
-		bool state = alana.GetComponent<Animator>().GetBool("walk");
-
-		alana.GetComponent<Animator>().runtimeAnimatorController = alanaAnimator[currentStory];
-		alana.GetComponent<Animator>().SetBool("walk", state);
-
-
+		
+		for (int i = 0; i < maxStory; i++) {
+			if (i == currentStory) {
+				alana[i].GetComponent<SpriteRenderer>().sortingOrder = 2;
+				char1[i].GetComponent<SpriteRenderer>().sortingOrder = 1;
+			} else {
+				alana[i].GetComponent<SpriteRenderer>().sortingOrder = -100;
+				char1[i].GetComponent<SpriteRenderer>().sortingOrder = -100;
+			}
+		}
 	}
 	
 	// Update is called once per frame
