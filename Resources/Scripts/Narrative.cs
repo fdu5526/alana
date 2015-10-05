@@ -11,7 +11,6 @@ public class Narrative : MonoBehaviour {
 
 	GameObject[] alana, char1;
 	Sprite[] foreground1s, foreground2s, backgrounds;
-	RuntimeAnimatorController[] alanaAnimator, char1Animator;
 	BlackFade fade;
 
 	string[] names = {"Prostitute", "Cookie"};
@@ -22,6 +21,7 @@ public class Narrative : MonoBehaviour {
 	int currentPart = 1;
 
 	Vector3[] part2CameraPositions;
+	
 
 	Dialogue[] dialogues;
 
@@ -30,6 +30,7 @@ public class Narrative : MonoBehaviour {
 	void Start () {
 		rb = GetComponent<Rigidbody2D>();		
 		maxStory = names.Length;
+		fade = GameObject.Find("Canvas/Black").GetComponent<BlackFade>();
 
 		// TODO
 		currentPart = 2;
@@ -40,13 +41,17 @@ public class Narrative : MonoBehaviour {
 
 
 	void PlayPart2 () {
+		// initialize all camera positions
 		part2CameraPositions = new Vector3[maxStory];
 		for (int i = 0; i < maxStory; i++){
 			part2CameraPositions[i] = new Vector3(-8.66f - 20.31f * (float)(i+1), -0.3f, -10f);
 		}
-
+		// move to correct camera location
 		GetComponent<Transform>().position = part2CameraPositions[currentStory];
-		
+
+		// fade to black
+		fade.rate = 0.005f;
+		fade.state = BlackFade.FadeState.FadeOut;
 	}
 
 
@@ -57,7 +62,6 @@ public class Narrative : MonoBehaviour {
 		foreground1 = GameObject.Find("foreground1");
 		foreground2 = GameObject.Find("foreground2");
 	 	background = GameObject.Find("background");
-	 	fade = GameObject.Find("Canvas/Black").GetComponent<BlackFade>();
 
 	 	// get all the stuff that switches
 	 	alana = new GameObject[maxStory];
@@ -65,15 +69,12 @@ public class Narrative : MonoBehaviour {
 	 	foreground1s = new Sprite[maxStory];
 	 	foreground2s = new Sprite[maxStory];
 	 	backgrounds	 = new Sprite[maxStory];
-	 	alanaAnimator = new RuntimeAnimatorController[maxStory];
-	 	char1Animator = new RuntimeAnimatorController[maxStory];
 	 	for (int i = 0; i < maxStory; i++) {
 	 		alana[i] = GameObject.Find("Alana/" + names[i]);
 	 		char1[i] = GameObject.Find("Char1/" + names[i]);
 	 		foreground1s[i] = Resources.Load<Sprite>(names[i] + "/foreground1");
 	 		foreground2s[i] = Resources.Load<Sprite>(names[i] + "/foreground2");
 	 		backgrounds[i] = Resources.Load<Sprite>(names[i] + "/background");
-	 		alanaAnimator[i] = Resources.Load<RuntimeAnimatorController>("Animations/" + names[i] + "Alana");
 	 	}
 
 	 	for (int i = 0; i < maxStory; i++) {
@@ -116,6 +117,8 @@ public class Narrative : MonoBehaviour {
 		Invoke("StopCamera", 	 start + 54f);
 		Invoke("StopWalk", 		 start + 63f);
 		Invoke("CutToKnock", 	 start + 67f);
+		Invoke("Knock", 	 start + 70f);
+		Invoke("MoveToPart2", 	 start + 73f);
 	}
 
 
@@ -213,6 +216,15 @@ public class Narrative : MonoBehaviour {
 	void CutToKnock () {
 		fade.rate = 0.1f;
 		fade.state = BlackFade.FadeState.FadeIn;
+	}
+
+	void Knock () {
+		// TODO play knock sound
+	}
+
+	void MoveToPart2 () {
+		currentPart = 2;
+		PlayPart2();
 	}
 
 	// replace all sprites to switch scenes
