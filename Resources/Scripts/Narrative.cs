@@ -9,7 +9,7 @@ public class Narrative : MonoBehaviour {
 
 	GameObject foreground1, foreground2, background;
 
-	GameObject[] alana, char1;
+	GameObject[] alana, char1, food;
 	Sprite[] foreground1s, foreground2s, backgrounds;
 	BlackFade fade;
 
@@ -190,12 +190,14 @@ public class Narrative : MonoBehaviour {
 	 	// get all the stuff that switches
 	 	alana = new GameObject[maxStory];
 		char1 = new GameObject[maxStory];
+		food = new GameObject[maxStory];
 	 	foreground1s = new Sprite[maxStory];
 	 	foreground2s = new Sprite[maxStory];
 	 	backgrounds	 = new Sprite[maxStory];
 	 	for (int i = 0; i < maxStory; i++) {
 	 		alana[i] = GameObject.Find("Alana/" + names[i]);
 	 		char1[i] = GameObject.Find("Char1/" + names[i]);
+	 		food[i] = GameObject.Find("Char1/Food" + names[i]);
 	 		foreground1s[i] = Resources.Load<Sprite>(names[i] + "/foreground1");
 	 		foreground2s[i] = Resources.Load<Sprite>(names[i] + "/foreground2");
 	 		backgrounds[i] = Resources.Load<Sprite>(names[i] + "/background");
@@ -203,11 +205,13 @@ public class Narrative : MonoBehaviour {
 
 	 	for (int i = 0; i < maxStory; i++) {
 			if (i == currentStory) {
-				alana[i].GetComponent<SpriteRenderer>().sortingOrder = 2;
-				char1[i].GetComponent<SpriteRenderer>().sortingOrder = 1;
+				alana[i].GetComponent<SpriteRenderer>().sortingOrder = 3;
+				char1[i].GetComponent<SpriteRenderer>().sortingOrder = 2;
+				food[i].GetComponent<SpriteRenderer>().sortingOrder = 1;
 			} else {
 				alana[i].GetComponent<SpriteRenderer>().sortingOrder = -100;
 				char1[i].GetComponent<SpriteRenderer>().sortingOrder = -100;
+				food[i].GetComponent<SpriteRenderer>().sortingOrder = -100;
 			}
 		}
 
@@ -289,6 +293,11 @@ public class Narrative : MonoBehaviour {
 
 	void TalkToPimp3 () {
 		dialogues[3].Display(); // here
+
+		for (int i = 0; i < maxStory; i++) {
+			char1[i].GetComponent<Animator>().SetTrigger("giveFood");
+			food[i].GetComponent<Food>().Enable();
+		}
 	}
 
 	void TalkToPimp4 () {
@@ -362,11 +371,13 @@ public class Narrative : MonoBehaviour {
 		
 		for (int i = 0; i < maxStory; i++) {
 			if (i == currentStory) {
-				alana[i].GetComponent<SpriteRenderer>().sortingOrder = 2;
-				char1[i].GetComponent<SpriteRenderer>().sortingOrder = 1;
+				alana[i].GetComponent<SpriteRenderer>().sortingOrder = 3;
+				char1[i].GetComponent<SpriteRenderer>().sortingOrder = 2;
+				food[i].GetComponent<SpriteRenderer>().sortingOrder = 1;
 			} else {
 				alana[i].GetComponent<SpriteRenderer>().sortingOrder = -100;
 				char1[i].GetComponent<SpriteRenderer>().sortingOrder = -100;
+				food[i].GetComponent<SpriteRenderer>().sortingOrder = -100;
 			}
 		}
 	}
