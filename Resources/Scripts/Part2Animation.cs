@@ -9,7 +9,6 @@ public class Part2Animation : MonoBehaviour {
 	public float transitionDuration;
 	public float displayDuration;
 	public Vector2 velocity;
-	public int sortingOrder;
 
 	bool enabled = false;
 
@@ -25,20 +24,19 @@ public class Part2Animation : MonoBehaviour {
 		prevFrame = -1;
 		lastSwitchTime = 0;
 
+		int sortingOrder = GetComponent<SpriteRenderer>().sortingOrder;
+		GetComponent<SpriteRenderer>().sortingOrder = sortingOrder - 1;
+
 
 		frames = new GameObject[frameCount];
 		for (int i = 0; i < frameCount; i++) {
 			frames[i] = (GameObject)MonoBehaviour.Instantiate(Resources.Load("Prefabs/part2Animation"));
 			frames[i].GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(path + i.ToString());
-			frames[i].GetComponent<SpriteRenderer>().color = new Color(1f,1f,1f,0f);
+			frames[i].GetComponent<SpriteRenderer>().color = Color.clear;
 			frames[i].GetComponent<SpriteRenderer>().sortingOrder = sortingOrder;
 			frames[i].GetComponent<Transform>().position = GetComponent<Transform>().position;
 			frames[i].GetComponent<Transform>().localScale = GetComponent<Transform>().localScale;
 		}
-
-
-
-		Enable(); //TODO
 	}
 
 	public void Enable () {
@@ -47,6 +45,8 @@ public class Part2Animation : MonoBehaviour {
 		for (int i = 0; i < frameCount; i++) {
 			frames[i].GetComponent<Rigidbody2D>().velocity = velocity;
 		}
+
+		lastSwitchTime = Time.time;
 		
 	}
 
@@ -73,7 +73,7 @@ public class Part2Animation : MonoBehaviour {
 
 		if (Time.time - lastSwitchTime <= transitionDuration) {
 			float t = Mathf.Min((Time.time - lastSwitchTime) / transitionDuration, 1f);
-			float c = prevFrame > currentFrame ? 0f : 0.7f;
+			float c = (currentFrame == 0) ? 0f : 0.7f;
 			frames[currentFrame].GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, c + t);
 			if (prevFrame >= 0) {
 				frames[prevFrame].GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f - t);
@@ -89,8 +89,6 @@ public class Part2Animation : MonoBehaviour {
 			}	
 			prevFrame = currentFrame;
 			currentFrame = ((currentFrame + 1 == frameCount) && shouldLoop) ? 0 : currentFrame + 1;
-
-			
 		}
 
 
