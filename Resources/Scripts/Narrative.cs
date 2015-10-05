@@ -14,18 +14,45 @@ public class Narrative : MonoBehaviour {
 	RuntimeAnimatorController[] alanaAnimator, char1Animator;
 	BlackFade fade;
 
-	int currentStory = 1;
+	string[] names = {"Prostitute", "Cookie"};
+
+	int currentStory = 0;
 	int maxStory;
+
+	int currentPart = 1;
+
+	Vector3[] part2CameraPositions;
 
 	Dialogue[] dialogues;
 
 
 	// Use this for initialization
 	void Start () {
-		rb = GetComponent<Rigidbody2D>();
-		
-		string[] names = {"Prostitute", "Cookie"};
+		rb = GetComponent<Rigidbody2D>();		
 		maxStory = names.Length;
+
+		// TODO
+		currentPart = 2;
+		PlayPart2();
+
+
+	}
+
+
+	void PlayPart2 () {
+		part2CameraPositions = new Vector3[maxStory];
+		for (int i = 0; i < maxStory; i++){
+			part2CameraPositions[i] = new Vector3(-8.66f - 20.31f * (float)(i+1), -0.3f, -10f);
+		}
+
+		GetComponent<Transform>().position = part2CameraPositions[currentStory];
+		
+	}
+
+
+	void PlayPart1 () {
+
+		GetComponent<Transform>().position = new Vector3(-8.66f, -0.3f, -10f);
 
 		foreground1 = GameObject.Find("foreground1");
 		foreground2 = GameObject.Find("foreground2");
@@ -89,7 +116,6 @@ public class Narrative : MonoBehaviour {
 		Invoke("StopCamera", 	 start + 54f);
 		Invoke("StopWalk", 		 start + 63f);
 		Invoke("CutToKnock", 	 start + 67f);
-
 	}
 
 
@@ -181,7 +207,6 @@ public class Narrative : MonoBehaviour {
 			alana[i].GetComponent<Rigidbody2D>().velocity = Vector2.zero;
 			alana[i].GetComponent<Animator>().SetBool("walk", false);
 		}
-		
 	}
 
 
@@ -190,8 +215,8 @@ public class Narrative : MonoBehaviour {
 		fade.state = BlackFade.FadeState.FadeIn;
 	}
 
-
-	void Switch () {
+	// replace all sprites to switch scenes
+	void SwitchPart1 () {
 		currentStory = currentStory + 1 == maxStory ? 0 : currentStory + 1;
 
 		background.GetComponent<SpriteRenderer>().sprite = backgrounds[currentStory];
@@ -209,11 +234,22 @@ public class Narrative : MonoBehaviour {
 			}
 		}
 	}
+
+	// just move camera
+	void SwitchPart2 () {
+		currentStory = currentStory + 1 == maxStory ? 0 : currentStory + 1;
+
+		GetComponent<Transform>().position = part2CameraPositions[currentStory];
+	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetMouseButtonUp(0)) {
-			Switch();
+			if (currentPart == 1) {
+				SwitchPart1();
+			} else {
+				SwitchPart2();
+			}
 		}
 	}
 }
