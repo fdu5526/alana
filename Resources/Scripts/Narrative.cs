@@ -46,14 +46,34 @@ public class Narrative : MonoBehaviour {
 		for (int i = 0; i < maxStory; i++){
 			part2CameraPositions[i] = new Vector3(-8.66f - 20.31f * (float)(i+1), -0.3f, -10f);
 		}
+
+		
+		int numTexts = 16;
+		dialogues = new Dialogue[numTexts];
+
+		for (int i = 0; i < numTexts; i++) {
+			dialogues[i] = GameObject.Find("MainCamera/Text " + i).GetComponent<Dialogue>();
+		}
+
+
 		// move to correct camera location
 		GetComponent<Transform>().position = part2CameraPositions[currentStory];
 
 		// fade to black
-		fade.rate = 0.005f;
+		fade.rate = 0.01f;
 		fade.state = BlackFade.FadeState.FadeOut;
 
-		Invoke("StartRunningPart2", 6f);
+		float start = 0f;
+		Invoke("TalkToClient0", 		start);
+		Invoke("TalkToClient1", 		start + 3f);
+		Invoke("StartRunningPart2", start + 6f);
+		Invoke("TalkToClient2", 		start + 7f);
+		Invoke("TalkToClient3", 		start + 18f);
+		Invoke("TalkToClient4", 		start + 24f);
+		Invoke("TalkToClient5", 		start + 30f);
+		Invoke("FadeToBlack", 			start + 34f);
+		Invoke("FadeFromBlack", 		start + 38f);
+
 	}
 
 	void StartRunningPart2 () {
@@ -61,10 +81,39 @@ public class Narrative : MonoBehaviour {
 	}
 
 
-	void TalkToClient1 () {
-		
+	void TalkToClient0 () { // Come in.
+		dialogues[0].Display();
 	}
 
+	void TalkToClient1 () { // Alana! It's been a while. I haven't seen you in so long.
+		dialogues[1].Display();
+	}
+
+	void TalkToClient2 () { // What have you got this time? Show me.
+		dialogues[2].Display();
+	}
+
+	void TalkToClient3 () { // Fantastic!
+		dialogues[3].Display();
+	}
+
+	void TalkToClient4 () { //  I know this is hard for you
+		dialogues[4].Display();
+	}
+
+	void TalkToClient5 () { // I'll do my best.
+		dialogues[5].Display();
+	}
+
+	void FadeToBlack () {
+		fade.rate = 0.01f;
+		fade.state = BlackFade.FadeState.FadeIn;
+	}
+
+	void FadeFromBlack () {
+		fade.rate = 0.01f;
+		fade.state = BlackFade.FadeState.FadeOut;
+	}
 
 
 

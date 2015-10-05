@@ -7,7 +7,7 @@ public class Part2Still : MonoBehaviour {
 	public Vector2 velocity;
 
 	float lastSwitchTime;
-	bool enabled;
+	bool isEnabled;
 
 	SpriteRenderer spriteRenderer;
 
@@ -15,17 +15,17 @@ public class Part2Still : MonoBehaviour {
 	void Start () {
 		spriteRenderer = GetComponent<SpriteRenderer>();
 		spriteRenderer.color = Color.clear;
-		enabled = false;
+		isEnabled = false;
 	}
 
 	public void Enable () {
-		enabled = true;
+		isEnabled = true;
 		lastSwitchTime = Time.time;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (!enabled) {
+		if (!isEnabled) {
 			return;
 		}
 		if (Time.time - lastSwitchTime <= transitionDuration) {	// fade in

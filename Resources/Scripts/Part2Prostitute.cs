@@ -15,11 +15,11 @@ public class Part2Prostitute : MonoBehaviour {
 	}
 
 	public void Run () {
-		Invoke("Reveal", 2f);
-		Invoke("Smile", 4f);
-		Invoke("ArmAroundShoulder", 8f);
-		Invoke("BackgroundAnimation", 16f);
-		Invoke("LickLips", 16f);
+		Invoke("Reveal", 6f);
+		Invoke("Smile", 10f);
+		Invoke("ArmAroundShoulder", 16f);
+		Invoke("BackgroundAnimation", 32f);
+		Invoke("LickLips", 36f);
 	}
 
 

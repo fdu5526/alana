@@ -11,7 +11,7 @@ public class Part2Animation : MonoBehaviour {
 	public float displayDuration;
 	public Vector2 velocity;
 
-	bool enabled = false;
+	bool isEnabled = false;
 
 	int currentFrame, prevFrame;
 	float lastSwitchTime;
@@ -41,7 +41,7 @@ public class Part2Animation : MonoBehaviour {
 	}
 
 	public void Enable () {
-		enabled = true;
+		isEnabled = true;
 
 		for (int i = 0; i < frameCount; i++) {
 			frames[i].GetComponent<Rigidbody2D>().velocity = velocity;
@@ -56,7 +56,7 @@ public class Part2Animation : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if (!enabled) {
+		if (!isEnabled) {
 			return;
 		}
 		
@@ -67,7 +67,7 @@ public class Part2Animation : MonoBehaviour {
 					frames[prevFrame].GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f - t);
 				}
 				if (t > 0.99f) {
-					enabled = false;
+					isEnabled = false;
 				}
 			}
 			return;
