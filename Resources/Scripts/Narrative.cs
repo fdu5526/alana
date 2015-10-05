@@ -52,7 +52,30 @@ public class Narrative : MonoBehaviour {
 		// fade to black
 		fade.rate = 0.005f;
 		fade.state = BlackFade.FadeState.FadeOut;
+
+		Invoke("StartRunningPart2", 6f);
 	}
+
+	void StartRunningPart2 () {
+		GameObject.Find("Part2Prostitute").GetComponent<Part2Prostitute>().Run();
+	}
+
+
+	void TalkToClient1 () {
+		
+	}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 	void PlayPart1 () {
@@ -250,7 +273,6 @@ public class Narrative : MonoBehaviour {
 	// just move camera
 	void SwitchPart2 () {
 		currentStory = currentStory + 1 == maxStory ? 0 : currentStory + 1;
-
 		GetComponent<Transform>().position = part2CameraPositions[currentStory];
 	}
 	

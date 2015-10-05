@@ -5,6 +5,7 @@ public class Part2Animation : MonoBehaviour {
 
 	public int frameCount;
 	public bool shouldLoop;
+	public bool shouldRemain;
 	public string path;
 	public float transitionDuration;
 	public float displayDuration;
@@ -60,12 +61,14 @@ public class Part2Animation : MonoBehaviour {
 		}
 		
 		if (currentFrame == frameCount) {
-			float t = Mathf.Min((Time.time - lastSwitchTime) / transitionDuration, 1f);
-			if (prevFrame >= 0) {
-				frames[prevFrame].GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f - t);
-			}
-			if (t > 0.99f) {
-				enabled = false;
+			if (!shouldRemain) {
+				float t = Mathf.Min((Time.time - lastSwitchTime) / transitionDuration, 1f);
+				if (prevFrame >= 0) {
+					frames[prevFrame].GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f - t);
+				}
+				if (t > 0.99f) {
+					enabled = false;
+				}
 			}
 			return;
 		}
