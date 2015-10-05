@@ -48,7 +48,7 @@ public class Narrative : MonoBehaviour {
 		}
 
 		
-		int numTexts = 16;
+		int numTexts = 15;
 		dialogues = new Dialogue[numTexts];
 
 		for (int i = 0; i < numTexts; i++) {
