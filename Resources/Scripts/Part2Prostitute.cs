@@ -15,11 +15,15 @@ public class Part2Prostitute : MonoBehaviour {
 	}
 
 	public void Run () {
-		Invoke("Reveal", 6f);
-		Invoke("Smile", 10f);
-		Invoke("ArmAroundShoulder", 16f);
-		Invoke("BackgroundAnimation", 32f);
-		Invoke("LickLips", 36f);
+		float start = 0f;
+		Invoke("Reveal", 					  	start + 12f);
+		Invoke("Smile", 					  	start + 16f);
+		Invoke("ArmAroundShoulder", 	start + 22f);
+		Invoke("BackgroundAnimation", start + 38f);
+		Invoke("LickLips",  					start + 42f);
+		Invoke("DressUp",  					  start + 56f);
+		Invoke("GiveReward",  				start + 68f);
+		Invoke("TakeReward",  				start + 72f);
 	}
 
 
@@ -45,6 +49,17 @@ public class Part2Prostitute : MonoBehaviour {
 		shots[6].GetComponent<Part2Animation>().Enable();
 	}
 
+	void DressUp () {
+		shots[7].GetComponent<Part2Still>().Enable();
+	}
+
+	void GiveReward () {
+		shots[8].GetComponent<Part2Still>().Enable();
+	}
+
+	void TakeReward () {
+		shots[9].GetComponent<Part2Still>().Enable();
+	}
 
 	
 	// Update is called once per frame

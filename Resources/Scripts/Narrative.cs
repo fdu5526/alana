@@ -33,8 +33,8 @@ public class Narrative : MonoBehaviour {
 		fade = GameObject.Find("Canvas/Black").GetComponent<BlackFade>();
 
 		// TODO
-		currentPart = 2;
-		PlayPart2();
+		currentPart = 1;
+		PlayPart1();
 
 
 	}
@@ -63,10 +63,11 @@ public class Narrative : MonoBehaviour {
 		fade.rate = 0.01f;
 		fade.state = BlackFade.FadeState.FadeOut;
 
+		
 		float start = 0f;
+		Invoke("RunPart2Animations",start);
 		Invoke("TalkToClient0", 		start);
 		Invoke("TalkToClient1", 		start + 3f);
-		Invoke("StartRunningPart2", start + 6f);
 		Invoke("TalkToClient2", 		start + 7f);
 		Invoke("TalkToClient3", 		start + 18f);
 		Invoke("TalkToClient4", 		start + 24f);
@@ -74,12 +75,27 @@ public class Narrative : MonoBehaviour {
 		Invoke("FadeToBlack", 			start + 34f);
 		Invoke("FadeFromBlack", 		start + 38f);
 
+
+		Invoke("TalkToClient6", 		start + 43f);
+		Invoke("TalkToClient7", 		start + 45f);
+		Invoke("TalkToClient8", 		start + 49f);
+		
+		Invoke("FadeToBlack", 			start + 53f);
+		Invoke("FadeFromBlack", 		start + 57f);
+
+		Invoke("TalkToClient9", 		start + 59f);
+		Invoke("TalkToClient10",  	start + 64f);
+
+		Invoke("TalkToClient11",  	start + 69f);
+		Invoke("TalkToClient12",  	start + 74f);
+		Invoke("TalkToClient13",  	start + 79f);
+		Invoke("TalkToClient14",  	start + 81f);
 	}
 
-	void StartRunningPart2 () {
+
+	void RunPart2Animations () {
 		GameObject.Find("Part2Prostitute").GetComponent<Part2Prostitute>().Run();
 	}
-
 
 	void TalkToClient0 () { // Come in.
 		dialogues[0].Display();
@@ -115,6 +131,42 @@ public class Narrative : MonoBehaviour {
 		fade.state = BlackFade.FadeState.FadeOut;
 	}
 
+
+	void TalkToClient6 () { // Take it slow.
+		dialogues[6].Display();
+	}
+
+	void TalkToClient7 () { // Y-Yeah.
+		dialogues[7].Display();
+	}
+
+	void TalkToClient8 () { // Here, this, it won't hurt.
+		dialogues[8].Display();
+	}
+
+	void TalkToClient9 () { // Great job, Alana!
+		dialogues[9].Display();
+	}
+
+	void TalkToClient10 () { // Much better this time.
+		dialogues[10].Display();
+	}
+
+	void TalkToClient11 () { // Here.
+		dialogues[11].Display();
+	}
+
+	void TalkToClient12 () { // Do you like it?
+		dialogues[12].Display();
+	}
+
+	void TalkToClient13 () { // It's... great...
+		dialogues[13].Display();
+	}
+
+	void TalkToClient14 () { // That's good.
+		dialogues[14].Display();
+	}
 
 
 
@@ -168,7 +220,7 @@ public class Narrative : MonoBehaviour {
 			dialogues[i] = GameObject.Find("Texts/Text " + i).GetComponent<Dialogue>();
 		}
 
-
+		//TODO change to 4
 		float start = 0f;
 
 		Invoke("MoveToStairs", start);
@@ -190,7 +242,7 @@ public class Narrative : MonoBehaviour {
 		Invoke("StopWalk", 		 start + 63f);
 		Invoke("CutToKnock", 	 start + 67f);
 		Invoke("Knock", 	 start + 70f);
-		Invoke("MoveToPart2", 	 start + 73f);
+		Invoke("MoveToPart2", 	 start + 72f);
 	}
 
 
@@ -286,7 +338,7 @@ public class Narrative : MonoBehaviour {
 
 
 	void CutToKnock () {
-		fade.rate = 0.1f;
+		fade.rate = 0.01f;
 		fade.state = BlackFade.FadeState.FadeIn;
 	}
 
