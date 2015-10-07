@@ -3,8 +3,8 @@ using System.Collections;
 
 public class Part2Cookie : MonoBehaviour {
 
-
 	GameObject[] shots;
+	AudioSource[] audios;
 
 	// Use this for initialization
 	void Start () {
@@ -12,6 +12,7 @@ public class Part2Cookie : MonoBehaviour {
 		for (int i = 0; i < 10; i++){
 			shots[i] = GameObject.Find("Part2Cookie/" + i);
 		}
+		audios = GetComponents<AudioSource>();
 	}
 
 	public void Run () {
