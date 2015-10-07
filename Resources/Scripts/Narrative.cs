@@ -32,10 +32,8 @@ public class Narrative : MonoBehaviour {
 		maxStory = names.Length;
 		fade = GameObject.Find("Canvas/Black").GetComponent<BlackFade>();
 
-		// TODO
-		currentPart = 2;
-		PlayPart2();
-
+		currentPart = 1;
+		PlayPart1();
 
 	}
 
