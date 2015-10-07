@@ -33,8 +33,8 @@ public class Narrative : MonoBehaviour {
 		fade = GameObject.Find("Canvas/Black").GetComponent<BlackFade>();
 
 		// TODO
-		currentPart = 1;
-		PlayPart1();
+		currentPart = 2;
+		PlayPart2();
 
 
 	}
@@ -69,7 +69,7 @@ public class Narrative : MonoBehaviour {
 		Invoke("TalkToClient0", 		start);
 		Invoke("TalkToClient1", 		start + 3f);
 		Invoke("TalkToClient2", 		start + 7f);
-		Invoke("TalkToClient3", 		start + 18f);
+		Invoke("TalkToClient3", 		start + 16f);
 		Invoke("TalkToClient4", 		start + 24f);
 		Invoke("TalkToClient5", 		start + 30f);
 		Invoke("FadeToBlack", 			start + 34f);
@@ -80,8 +80,8 @@ public class Narrative : MonoBehaviour {
 		Invoke("TalkToClient7", 		start + 45f);
 		Invoke("TalkToClient8", 		start + 49f);
 		
-		Invoke("FadeToBlack", 			start + 53f);
-		Invoke("FadeFromBlack", 		start + 57f);
+		Invoke("FadeToBlack", 			start + 54f);
+		Invoke("FadeFromBlack", 		start + 58f);
 
 		Invoke("TalkToClient9", 		start + 59f);
 		Invoke("TalkToClient10",  	start + 64f);
@@ -95,6 +95,7 @@ public class Narrative : MonoBehaviour {
 
 	void RunPart2Animations () {
 		GameObject.Find("Part2Prostitute").GetComponent<Part2Prostitute>().Run();
+		GameObject.Find("Part2Cookie").GetComponent<Part2Cookie>().Run();
 	}
 
 	void TalkToClient0 () { // Come in.

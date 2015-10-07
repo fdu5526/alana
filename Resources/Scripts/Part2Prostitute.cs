@@ -21,7 +21,7 @@ public class Part2Prostitute : MonoBehaviour {
 		Invoke("ArmAroundShoulder", 	start + 22f);
 		Invoke("BackgroundAnimation", start + 38f);
 		Invoke("LickLips",  					start + 42f);
-		Invoke("DressUp",  					  start + 56f);
+		Invoke("DressUp",  					  start + 57f);
 		Invoke("GiveReward",  				start + 68f);
 		Invoke("TakeReward",  				start + 72f);
 	}
