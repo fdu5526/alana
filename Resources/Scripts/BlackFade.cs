@@ -15,7 +15,7 @@ public class BlackFade : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		state = FadeState.FadeOut;
+		state = FadeState.None;
 		t = 1f;
 	}
 	

@@ -50,6 +50,7 @@ public class Part2Prostitute : MonoBehaviour {
 	}
 
 	void DressUp () {
+		shots[5].SetActive(false);
 		shots[7].GetComponent<Part2Still>().Enable();
 	}
 

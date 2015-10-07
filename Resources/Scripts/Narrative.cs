@@ -7,7 +7,7 @@ public class Narrative : MonoBehaviour {
 	float speed = 0.5f;
 	
 
-	GameObject foreground1, foreground2, background;
+	GameObject foreground1, foreground2, background, title;
 
 	GameObject[] alana, char1, food;
 	Sprite[] foreground1s, foreground2s, backgrounds;
@@ -18,7 +18,7 @@ public class Narrative : MonoBehaviour {
 	int currentStory = 0;
 	int maxStory;
 
-	int currentPart = 1;
+	int currentPart = 0;
 
 	Vector3[] part2CameraPositions;
 	
@@ -32,9 +32,36 @@ public class Narrative : MonoBehaviour {
 		maxStory = names.Length;
 		fade = GameObject.Find("Canvas/Black").GetComponent<BlackFade>();
 
-		currentPart = 1;
-		PlayPart1();
+		currentPart = 0;
+		title = GameObject.Find("Title");
 
+		
+		float start = 2f;
+		Invoke("TitleFadeFromBlack", start + 0f);
+		Invoke("TitleFadeToBlack", 	 start + 5f);
+		Invoke("TurnOffTitle", start + 10f);
+		Invoke("PlayPart1", 				 start + 8f);
+		Invoke("TitleFadeFromBlack", start + 10f);
+		
+/*
+		currentPart = 2;
+		PlayPart2();
+*/	
+	}
+
+
+	void TitleFadeFromBlack () {
+		fade.rate = 0.005f;
+		fade.state = BlackFade.FadeState.FadeOut;
+	}
+
+	void TitleFadeToBlack () {
+		fade.rate = 0.005f;
+		fade.state = BlackFade.FadeState.FadeIn;
+	}
+
+	void TurnOffTitle () {
+		title.GetComponent<SpriteRenderer>().enabled = false;
 	}
 
 
@@ -73,7 +100,6 @@ public class Narrative : MonoBehaviour {
 		Invoke("FadeToBlack", 			start + 34f);
 		Invoke("FadeFromBlack", 		start + 38f);
 
-
 		Invoke("TalkToClient6", 		start + 43f);
 		Invoke("TalkToClient7", 		start + 45f);
 		Invoke("TalkToClient8", 		start + 49f);
@@ -88,6 +114,10 @@ public class Narrative : MonoBehaviour {
 		Invoke("TalkToClient12",  	start + 74f);
 		Invoke("TalkToClient13",  	start + 79f);
 		Invoke("TalkToClient14",  	start + 81f);
+
+		Invoke("TitleFadeToBlack", 	start + 87f);
+		Invoke("ShowCredits", 			start +	92f);
+		Invoke("TitleFadeFromBlack",start + 92f);
 	}
 
 
@@ -167,18 +197,18 @@ public class Narrative : MonoBehaviour {
 		dialogues[14].Display();
 	}
 
-
-
-
-
-
-
+	void ShowCredits () {
+		GetComponent<Transform>().position = new Vector3(-8.66f, -0.3f, -10f);
+		title.GetComponent<SpriteRenderer>().enabled = true;
+		title.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("UI/credits");
+	}
 
 
 
 
 
 	void PlayPart1 () {
+		currentPart = 1;
 
 		GetComponent<Transform>().position = new Vector3(-8.66f, -0.3f, -10f);
 
@@ -223,9 +253,7 @@ public class Narrative : MonoBehaviour {
 			dialogues[i] = GameObject.Find("Texts/Text " + i).GetComponent<Dialogue>();
 		}
 
-		//TODO change to 4
-		float start = 0f;
-
+		float start = 8f;
 		Invoke("MoveToStairs", start);
 		Invoke("MoveUpStairs", start + 13f);
 		
@@ -392,7 +420,7 @@ public class Narrative : MonoBehaviour {
 		if (Input.GetMouseButtonUp(0)) {
 			if (currentPart == 1) {
 				SwitchPart1();
-			} else {
+			} else if (currentPart == 2) {
 				SwitchPart2();
 			}
 		}
