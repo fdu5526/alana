@@ -39,7 +39,7 @@ public class Narrative : MonoBehaviour {
 		float start = 2f;
 		Invoke("TitleFadeFromBlack", start + 0f);
 		Invoke("TitleFadeToBlack", 	 start + 5f);
-		Invoke("TurnOffTitle", start + 10f);
+		Invoke("TurnOffTitle", 			 start + 10f);
 		Invoke("PlayPart1", 				 start + 8f);
 		Invoke("TitleFadeFromBlack", start + 10f);
 		
@@ -255,6 +255,7 @@ public class Narrative : MonoBehaviour {
 
 		float start = 8f;
 		Invoke("MoveToStairs", start);
+		Invoke("PromptMouse",  start + 2f);
 		Invoke("MoveUpStairs", start + 13f);
 		
 		Invoke("MoveToPimp", 	 start + 18.5f);
@@ -285,6 +286,10 @@ public class Narrative : MonoBehaviour {
 			alana[i].GetComponent<Rigidbody2D>().velocity = v;
 			alana[i].GetComponent<Animator>().SetBool("walk", true);
 		}
+	}
+
+	void PromptMouse () {
+		GameObject.Find("mousePrompt").GetComponent<MouseUI>().Enable();
 	}
 
 	void MoveUpStairs () {
