@@ -4,7 +4,7 @@ using System.Collections;
 public class Part2Cookie : MonoBehaviour {
 
 	GameObject[] shots;
-	AudioSource[] audios;
+	AudioSource[] audios; // hair, metal, cookie, dial, ovenDoor, sparkle
 
 	// Use this for initialization
 	void Start () {
@@ -21,9 +21,11 @@ public class Part2Cookie : MonoBehaviour {
 		Invoke("ShowCookie", start + 11f);
 		Invoke("OvenMits", 	 start + 22f);
 		Invoke("PutInOven",  start + 38f);
+		Invoke("ShutOvenDoor", start + 47f);
 		Invoke("Dial",  		 start + 47f);
 		Invoke("OvenHeatUp", start + 50f);
 		Invoke("CookieDone", start + 57f);
+		Invoke("CookieSparkle", start + 59f);
 		Invoke("GiveReward", start + 68f);
 		Invoke("TakeReward", start + 72f);
 	}
@@ -43,6 +45,7 @@ public class Part2Cookie : MonoBehaviour {
 
 	void Ruffle () {
 		shots[1].GetComponent<Part2Still>().Enable();
+		audios[0].Play();
 	}
 
 	void ShowCookie () {
@@ -55,6 +58,11 @@ public class Part2Cookie : MonoBehaviour {
 
 	void PutInOven () {
 		shots[4].GetComponent<Part2Still>().Enable();
+		audios[1].Play();
+	}
+
+	void ShutOvenDoor () {
+		audios[4].Play();
 	}
 
 	void Dial () {
@@ -63,10 +71,15 @@ public class Part2Cookie : MonoBehaviour {
 
 	void OvenHeatUp () {
 		shots[6].GetComponent<Part2Still>().Enable();
+		audios[3].Play();
 	}
 
 	void CookieDone () {
 		shots[7].GetComponent<Part2Still>().Enable();
+	}
+
+	void CookieSparkle () {
+		audios[5].Play();
 	}
 
 	void GiveReward () {
@@ -75,6 +88,7 @@ public class Part2Cookie : MonoBehaviour {
 
 	void TakeReward () {
 		shots[9].GetComponent<Part2Still>().Enable();
+		audios[2].Play();
 	}
 
 	

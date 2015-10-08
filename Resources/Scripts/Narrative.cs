@@ -38,20 +38,20 @@ public class Narrative : MonoBehaviour {
 		currentPart = 0;
 		title = GameObject.Find("Title");
 
-/*	
+///*	
 		float start = 2f;
 		Invoke("TitleFadeFromBlack", start + 0f);
 		Invoke("TitleFadeToBlack", 	 start + 5f);
 		Invoke("TurnOffTitle", 			 start + 10f);
 		Invoke("PlayPart1", 				 start + 8f);
 		Invoke("TitleFadeFromBlack", start + 10f);
-*/		
-///*
+//*/		
+/*
 		TitleFadeFromBlack();
 		title.GetComponent<SpriteRenderer>().enabled = false;
-		currentPart = 1;
-		PlayPart1();
-//*/	
+		currentPart = 2;
+		PlayPart2();
+*/	
 	}
 
 
@@ -77,6 +77,8 @@ public class Narrative : MonoBehaviour {
 			part2CameraPositions[i] = new Vector3(-8.66f - 20.31f * (float)(i+1), -0.3f, -10f);
 		}
 
+		audios[5].Play();
+		audios[5].volume = 0.1f;
 		
 		int numTexts = 15;
 		dialogues = new Dialogue[numTexts];
@@ -206,6 +208,10 @@ public class Narrative : MonoBehaviour {
 		GetComponent<Transform>().position = new Vector3(-8.66f, -0.3f, -10f);
 		title.GetComponent<SpriteRenderer>().enabled = true;
 		title.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("UI/credits");
+
+		audios[2].Stop();
+		audios[5].Stop();
+		currentPart = 3;
 	}
 
 
@@ -407,6 +413,8 @@ public class Narrative : MonoBehaviour {
 	void MoveToPart2 () {
 		currentPart = 2;
 		PlayPart2();
+		char1[1].GetComponents<AudioSource>()[0].Stop();
+		foreground2.GetComponents<AudioSource>()[0].Stop();
 	}
 
 	// replace all sprites to switch scenes
@@ -459,6 +467,15 @@ public class Narrative : MonoBehaviour {
 		} else if (currentStory == 1) {
 			GameObject.Find("Part2Prostitute").GetComponent<Part2Prostitute>().Mute();
 			GameObject.Find("Part2Cookie").GetComponent<Part2Cookie>().Unmute();
+		}
+
+		float prostituteVolume = currentStory == 0 ? 1f : 0f;
+		for (int i = 2; i < audios.Length; i++) {
+			if (i < 5) {
+				audios[i].volume = prostituteVolume;
+			} else {
+				audios[i].volume = (1f - prostituteVolume) * 0.1f;
+			}
 		}
 	}
 	
