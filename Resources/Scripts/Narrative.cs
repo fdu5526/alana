@@ -77,8 +77,7 @@ public class Narrative : MonoBehaviour {
 			part2CameraPositions[i] = new Vector3(-8.66f - 20.31f * (float)(i+1), -0.3f, -10f);
 		}
 
-		audios[5].Play();
-		audios[5].volume = 0.1f;
+		audios[5].volume = currentStory == 0 ? 0f : 0.1f;
 		
 		int numTexts = 15;
 		dialogues = new Dialogue[numTexts];
