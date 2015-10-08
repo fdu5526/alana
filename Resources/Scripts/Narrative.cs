@@ -35,14 +35,14 @@ public class Narrative : MonoBehaviour {
 		currentPart = 0;
 		title = GameObject.Find("Title");
 
-		
+///*	
 		float start = 2f;
 		Invoke("TitleFadeFromBlack", start + 0f);
 		Invoke("TitleFadeToBlack", 	 start + 5f);
 		Invoke("TurnOffTitle", 			 start + 10f);
 		Invoke("PlayPart1", 				 start + 8f);
 		Invoke("TitleFadeFromBlack", start + 10f);
-		
+//*/		
 /*
 		currentPart = 2;
 		PlayPart2();
@@ -418,6 +418,14 @@ public class Narrative : MonoBehaviour {
 	void SwitchPart2 () {
 		currentStory = currentStory + 1 == maxStory ? 0 : currentStory + 1;
 		GetComponent<Transform>().position = part2CameraPositions[currentStory];
+
+		if (currentStory == 0) {
+ 			GameObject.Find("Part2Prostitute").GetComponent<Part2Prostitute>().Unmute();
+ 			GameObject.Find("Part2Cookie").GetComponent<Part2Cookie>().Mute();
+		} else if (currentStory == 1) {
+			GameObject.Find("Part2Prostitute").GetComponent<Part2Prostitute>().Mute();
+			GameObject.Find("Part2Cookie").GetComponent<Part2Cookie>().Unmute();
+		}
 	}
 	
 	// Update is called once per frame

@@ -28,6 +28,19 @@ public class Part2Prostitute : MonoBehaviour {
 	}
 
 
+	public void Mute () {
+		for (int i = 0; i < audios.Length; i++) {
+			audios[i].volume = 0f;
+		}
+	}
+
+	public void Unmute () {
+		for (int i = 0; i < audios.Length; i++) {
+			audios[i].volume = 1f;
+		}
+	}
+
+
 	void Reveal () {
 		shots[1].GetComponent<Part2Still>().Enable();
 	}

@@ -28,6 +28,18 @@ public class Part2Cookie : MonoBehaviour {
 		Invoke("TakeReward", start + 72f);
 	}
 
+	public void Mute () {
+		for (int i = 0; i < audios.Length; i++) {
+			audios[i].volume = 0f;
+		}
+	}
+
+	public void Unmute () {
+		for (int i = 0; i < audios.Length; i++) {
+			audios[i].volume = 1f;
+		}
+	}
+
 
 	void Ruffle () {
 		shots[1].GetComponent<Part2Still>().Enable();
