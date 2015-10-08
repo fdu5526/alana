@@ -19,10 +19,12 @@ public class Flicker : MonoBehaviour {
 
 	void FlickOff () {
 		GetComponent<SpriteRenderer>().color = flickOff;
+		GetComponents<AudioSource>()[0].volume = 0f;
 	}
 
 	void FlickOn () {
 		GetComponent<SpriteRenderer>().color = Color.white;
+		GetComponents<AudioSource>()[0].volume = 0.05f;
 	}
 
 	

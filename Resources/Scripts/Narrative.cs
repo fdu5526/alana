@@ -252,6 +252,7 @@ public class Narrative : MonoBehaviour {
 		// play sounds of city and controller of sister, and birds
 		audios[4].Play();
 		char1[1].GetComponents<AudioSource>()[0].Play();
+		foreground2.GetComponents<AudioSource>()[0].Play();
 		audios[5].Play();
 
 		float start = 8f;
@@ -439,6 +440,12 @@ public class Narrative : MonoBehaviour {
 			}
 		}
 		char1[1].GetComponents<AudioSource>()[0].volume = 1f - prostituteVolume;
+		if (currentStory == 0) {
+			foreground2.GetComponents<AudioSource>()[0].Play();
+		} else {
+			foreground2.GetComponents<AudioSource>()[0].Stop();
+		}
+		
 	}
 
 	// just move camera
