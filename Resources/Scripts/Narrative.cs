@@ -12,6 +12,7 @@ public class Narrative : MonoBehaviour {
 	GameObject[] alana, char1, food;
 	Sprite[] foreground1s, foreground2s, backgrounds;
 	BlackFade fade;
+	AudioSource[] audios; // knock, paperbag, buzz, highheels, traffic, birds, footsteps
 
 	string[] names = {"Prostitute", "Cookie"};
 
@@ -31,22 +32,26 @@ public class Narrative : MonoBehaviour {
 		rb = GetComponent<Rigidbody2D>();		
 		maxStory = names.Length;
 		fade = GameObject.Find("Canvas/Black").GetComponent<BlackFade>();
+		audios = GetComponents<AudioSource>();
+
 
 		currentPart = 0;
 		title = GameObject.Find("Title");
 
-///*	
+/*	
 		float start = 2f;
 		Invoke("TitleFadeFromBlack", start + 0f);
 		Invoke("TitleFadeToBlack", 	 start + 5f);
 		Invoke("TurnOffTitle", 			 start + 10f);
 		Invoke("PlayPart1", 				 start + 8f);
 		Invoke("TitleFadeFromBlack", start + 10f);
-//*/		
-/*
-		currentPart = 2;
-		PlayPart2();
-*/	
+*/		
+///*
+		TitleFadeFromBlack();
+		title.GetComponent<SpriteRenderer>().enabled = false;
+		currentPart = 1;
+		PlayPart1();
+//*/	
 	}
 
 
@@ -232,17 +237,8 @@ public class Narrative : MonoBehaviour {
 	 		backgrounds[i] = Resources.Load<Sprite>(names[i] + "/background");
 	 	}
 
-	 	for (int i = 0; i < maxStory; i++) {
-			if (i == currentStory) {
-				alana[i].GetComponent<SpriteRenderer>().sortingOrder = 3;
-				char1[i].GetComponent<SpriteRenderer>().sortingOrder = 2;
-				food[i].GetComponent<SpriteRenderer>().sortingOrder = 1;
-			} else {
-				alana[i].GetComponent<SpriteRenderer>().sortingOrder = -100;
-				char1[i].GetComponent<SpriteRenderer>().sortingOrder = -100;
-				food[i].GetComponent<SpriteRenderer>().sortingOrder = -100;
-			}
-		}
+	 	currentStory = 1;
+	 	SwitchPart1();
 
 
 	 	// dialogue initialization
@@ -252,6 +248,11 @@ public class Narrative : MonoBehaviour {
 		for (int i = 0; i < numTexts; i++) {
 			dialogues[i] = GameObject.Find("Texts/Text " + i).GetComponent<Dialogue>();
 		}
+		
+		// play sounds of city and controller of sister, and birds
+		audios[4].Play();
+		char1[1].GetComponents<AudioSource>()[0].Play();
+		audios[5].Play();
 
 		float start = 8f;
 		Invoke("MoveToStairs", start);
@@ -273,8 +274,8 @@ public class Narrative : MonoBehaviour {
 		Invoke("StopCamera", 	 start + 54f);
 		Invoke("StopWalk", 		 start + 63f);
 		Invoke("CutToKnock", 	 start + 67f);
-		Invoke("Knock", 	 start + 70f);
-		Invoke("MoveToPart2", 	 start + 72f);
+		Invoke("Knock", 	 		 start + 67.5f);
+		Invoke("MoveToPart2",  start + 72f);
 	}
 
 
@@ -286,6 +287,9 @@ public class Narrative : MonoBehaviour {
 			alana[i].GetComponent<Rigidbody2D>().velocity = v;
 			alana[i].GetComponent<Animator>().SetBool("walk", true);
 		}
+
+		audios[3].Play();
+		audios[6].Play();
 	}
 
 	void PromptMouse () {
@@ -321,10 +325,15 @@ public class Narrative : MonoBehaviour {
 			alana[i].GetComponent<Animator>().SetBool("walk", false);
 		}
 		dialogues[2].Display(); // is there any food left?
+
+		audios[3].Stop();
+		audios[6].Stop();
 	}
 
 	void TalkToPimp3 () {
 		dialogues[3].Display(); // here
+		audios[1].Play();
+		char1[1].GetComponents<AudioSource>()[0].Stop();
 
 		for (int i = 0; i < maxStory; i++) {
 			char1[i].GetComponent<Animator>().SetTrigger("giveFood");
@@ -334,6 +343,7 @@ public class Narrative : MonoBehaviour {
 
 	void TalkToPimp4 () {
 		dialogues[4].Display(); // thanks
+		char1[1].GetComponents<AudioSource>()[0].Play();
 	}
 
 	void TalkToPimp5 () {
@@ -363,6 +373,9 @@ public class Narrative : MonoBehaviour {
 			alana[i].GetComponent<Rigidbody2D>().velocity = v;
 			alana[i].GetComponent<Animator>().SetBool("walk", true);
 		}
+		audios[3].Play();
+		audios[6].Play();
+
 		dialogues[10].Display(); // You got this.
 	}
 
@@ -375,6 +388,9 @@ public class Narrative : MonoBehaviour {
 			alana[i].GetComponent<Rigidbody2D>().velocity = Vector2.zero;
 			alana[i].GetComponent<Animator>().SetBool("walk", false);
 		}
+
+		audios[3].Stop();
+		audios[6].Stop();
 	}
 
 
@@ -384,7 +400,7 @@ public class Narrative : MonoBehaviour {
 	}
 
 	void Knock () {
-		// TODO play knock sound
+		audios[0].Play();
 	}
 
 	void MoveToPart2 () {
@@ -412,6 +428,17 @@ public class Narrative : MonoBehaviour {
 				food[i].GetComponent<SpriteRenderer>().sortingOrder = -100;
 			}
 		}
+
+
+		float prostituteVolume = currentStory == 0 ? 1f : 0f;
+		for (int i = 2; i < audios.Length; i++) {
+			if (i < 5) {
+				audios[i].volume = prostituteVolume;
+			} else {
+				audios[i].volume = 1f - prostituteVolume;
+			}
+		}
+		char1[1].GetComponents<AudioSource>()[0].volume = 1f - prostituteVolume;
 	}
 
 	// just move camera
